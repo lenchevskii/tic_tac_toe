@@ -13,5 +13,5 @@ def validate_sign(sing):
     return sing in SIGN
 
 
-def validate_index(i):
-    pass
+def validate_index(i, lst):
+    return i in lst

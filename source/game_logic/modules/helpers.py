@@ -13,10 +13,5 @@ def anti_diagonal(lst):
     return list(list(fliplr(lst).diagonal()))
 
 
-def zip_split(lst):
-    a, b, c = [i[0] for i in zip(lst)]
-    return a, b, c
-
-
 def noop(item):
     return item

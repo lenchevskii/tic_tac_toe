@@ -1,5 +1,5 @@
-from itertools import chain
-from numpy import array_split
+from itertools  import chain
+from numpy      import array_split
 
 
 def chain_grid(grid):

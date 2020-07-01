@@ -1,7 +1,12 @@
-from itertools import chain
-from numpy import array_split, fliplr, matrix, diag
+from numpy import fliplr, matrix
+from modules.helpers import all_equal, is_empty_position, get_vacancies
+from modules.update_matrix import unchain_grid, update_sign, chain_grid
 
-SIGN = '0' or 'X'
+# dictionary for fast switch
+SIGN = {
+    '0': 'X',
+    'X': '0'
+}
 
 INITIAL_GRID = [
     ['_', '_', '_'],
@@ -16,33 +21,37 @@ def anti_diagonal(arr):
     return list(fliplr(arr).diagonal())
 
 
-def check_equal(lst):
-    return all(x == 'X' for x in lst) or all(x == '0' for x in lst)
-
-
-def chain_grid(grid):
-    return list(chain.from_iterable(grid))
-
-
-def update_sign(grid, sign, index):
-    return grid[:index] + [sign] + grid[index + 1:]
-
-
-def unchain_grid(lst):
-    return list(map(list, array_split(lst, 3)))
-
-
-def play(grid, sign: SIGN, position) -> SIGN:
-    if not check_equal(anti_diagonal(grid)):
-        new_grid = unchain_grid(update_sign(chain_grid(grid), sign, position))
-        print(matrix(new_grid))
-        new_position = int(input(f"Please, enter the position for {sign}: "))
-        play(new_grid, sign, new_position)
+def play(grid, sign, position):
+    new_grid = unchain_grid(update_sign(chain_grid(grid), sign, position))
+    print(matrix(new_grid), "\n")
+    if not all_equal(anti_diagonal(new_grid)):
+        new_position = int(input(f"Please, enter the vacant position for '{SIGN[sign]}'\n"
+                                 f"Vacant positions have following indexes: {get_vacancies(chain_grid(new_grid))}): "))
+        if is_empty_position(chain_grid(new_grid), new_position):
+            play(new_grid, SIGN[sign], new_position)
+        else:
+            play(grid, sign, position)
     else:
-        return print("X's win!")
+        return print(f"{sign}'s win!")
 
 
 if __name__ == "__main__":
+    print("Let's start the game!\n", "\n", matrix(INITIAL_GRID), "\n")
     side = input("Choose X or 0 (hint: 'X' is the Dark Side): ").upper()
     initial_position = int(input(f"Please, enter the position for {side}: "))
     play(INITIAL_GRID, side, initial_position)
+
+
+# Multiplayer
+# def play(grid, sign, position):
+#     new_grid = unchain_grid(update_sign(chain_grid(grid), sign, position))
+#     print(matrix(new_grid))
+#     if not all_equal(anti_diagonal(new_grid)):
+#         new_position = int(input(f"Please, enter the vacant position for '{SIGN[sign]}'\n"
+#                                  f"Vacant positions have following indexes: {get_vacancies(chain_grid(new_grid))}): "))
+#         if is_empty_position(chain_grid(new_grid), new_position):
+#             play(new_grid, SIGN[sign], new_position)
+#         else:
+#             play(grid, sign, position)
+#     else:
+#         return print(f"{sign}'s win!")

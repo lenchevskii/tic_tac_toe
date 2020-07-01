@@ -10,5 +10,5 @@ def update_sign(grid, sign, index):
     return grid[:index] + [sign] + grid[index + 1:]
 
 
-def unchain_grid(lst):
-    return list(map(list, array_split(lst, 3)))
+def unchain_grid(lst, sections=3):
+    return list(map(list, array_split(lst, sections)))

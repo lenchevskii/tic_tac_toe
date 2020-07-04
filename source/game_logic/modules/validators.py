@@ -1,4 +1,5 @@
-from modules.constants import SIGN
+from modules.grid_worker     import chain_grid
+from modules.constants          import SIGN
 
 
 def all_equal(lst):
@@ -6,7 +7,7 @@ def all_equal(lst):
 
 
 def is_empty_position(lst, position):
-    return lst[position] == '_'
+    return chain_grid(lst)[position] == '_'
 
 
 def validate_sign(sing):

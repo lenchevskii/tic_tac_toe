@@ -1,6 +1,6 @@
 from random                 import choice
 from modules.constants      import SIGN
-from modules.helpers        import get_vacancies
+from modules.grid_worker    import get_vacancies
 
 
 def get_position(current, bot, grid):

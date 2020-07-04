@@ -1,5 +1,7 @@
-from itertools  import chain
-from numpy import array_split, full
+from itertools          import chain
+from numpy              import array_split, full, diagonal, transpose
+from modules.helpers    import anti_diagonal, noop, flat_list
+from modules.validators import all_equal
 
 
 def chain_grid(grid):
@@ -23,5 +25,18 @@ def initiate_grid(n):
     return full((n, n), '_')
 
 
-def enumerate_grid(lst):
-    return unchain_grid(range(len(chain_grid(lst))), len(lst))
+def enumerate_grid(grid):
+    return unchain_grid(range(len(chain_grid(grid))), len(grid))
+
+
+def get_vacancies(grid):
+    return [i for i, x in enumerate(chain_grid(grid)) if x == '_']
+
+
+def get_win_combinations(grid):
+    winning_functions = [diagonal, anti_diagonal, transpose, noop]
+    return [all_equal(x) for x in flat_list(y(grid) for y in winning_functions)]
+
+
+def is_empty_position(grid, position):
+    return chain_grid(grid)[position] == '_'

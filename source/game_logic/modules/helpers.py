@@ -1,3 +1,4 @@
+from functools  import reduce
 from numpy      import fliplr, ndarray
 from itertools  import chain
 
@@ -25,3 +26,8 @@ def flat_list(lst):
                               or isinstance(x, list), i))
          else [list(i)] for i in lst]
     )
+
+
+def compose(*fns):
+    return reduce(lambda f, g: lambda x: f(g(x)), fns,
+                  lambda a, b, c, d: [a, b, c, d])

@@ -1,6 +1,7 @@
 from random                 import choice
-from modules.constants      import SIGN
-from modules.grid_worker    import get_vacancies, get_win_combinations
+from modules.helpers        import flat_list
+from modules.constants      import SIGN, WINNING_FUNCTIONS
+from modules.grid_worker    import get_vacancies
 
 
 def get_position(current, bot, grid):
@@ -15,4 +16,4 @@ def get_position(current, bot, grid):
 
 
 def get_smart_position(grid):
-    get_win_combinations(grid)
+    return flat_list(y(grid) for y in WINNING_FUNCTIONS)

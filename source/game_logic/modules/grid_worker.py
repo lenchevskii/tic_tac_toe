@@ -1,6 +1,7 @@
 from itertools          import chain
-from numpy              import array_split, full, diagonal, transpose
-from modules.helpers    import anti_diagonal, noop, flat_list
+from numpy              import array_split, full
+from modules.constants  import WINNING_FUNCTIONS
+from modules.helpers    import flat_list
 from modules.validators import all_equal
 
 
@@ -34,8 +35,7 @@ def get_vacancies(grid):
 
 
 def get_win_combinations(grid):
-    winning_functions = [diagonal, anti_diagonal, transpose, noop]
-    return [all_equal(x) for x in flat_list(y(grid) for y in winning_functions)]
+    return [all_equal(x) for x in flat_list(y(grid) for y in WINNING_FUNCTIONS)]
 
 
 def is_empty_position(grid, position):

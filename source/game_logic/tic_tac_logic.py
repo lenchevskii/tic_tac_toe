@@ -1,4 +1,4 @@
-from modules.constants 	import SIGN
+from modules.constants 	    import SIGN
 from modules.bot_mod 		import get_position, get_smart_position
 from modules.grid_worker 	import update_grid, get_win_combinations, \
     initiate_grid, enumerate_grid
